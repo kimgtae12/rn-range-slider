@@ -1,10 +1,14 @@
 import React, { memo, useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { Animated, PanResponder, View, ViewPropTypes } from 'react-native';
+import { Animated, PanResponder, Text, View, ViewPropTypes } from 'react-native';
 import PropTypes from 'prop-types';
 
 import styles from './styles';
 import {useThumbFollower, useLowHigh, useWidthLayout, useLabelContainerProps, useSelectedRail} from './hooks';
 import {clamp, getValueForPosition, isLowCloser} from './helpers';
+import mainStyle from '../../Style/mainStyle';
+import cstyles from '../../Style/style';
+import { colors } from '../../assets/colors';
+import { Image } from 'react-native';
 
 const trueFunc = () => true;
 
@@ -187,11 +191,19 @@ const Slider = (
             {renderRailSelected()}
           </Animated.View>
         </View>
-        <Animated.View style={lowStyles} onLayout={handleThumbLayout}>
+        <Animated.View style={[lowStyles,{alignItems:'center'}]} onLayout={handleThumbLayout}>
+          <View style={[mainStyle.flex_row_center,{position:'absolute',top:-30,alignItems:'center'}]}>
+              <Image style={{width:60,height:35,}} source={require('../../assets/img/bubble.png')} />
+              <Text style={[cstyles.font_R,{fontSize:12, top:3,color:colors.DEFULAT_COLOR,position:'absolute'}]}>{lowProp}세</Text>
+          </View>
           {lowThumb}
         </Animated.View>
         {
-          !disableRange && <Animated.View style={highStyles}>
+          !disableRange && <Animated.View style={[highStyles,{alignItems:'center'}]}>
+            <View style={[mainStyle.flex_row_center,{position:'absolute',top:-30,alignItems:'center'}]}>
+              <Image style={{width:60,height:35,}} source={require('../../assets/img/bubble.png')} />
+              <Text style={[cstyles.font_R,{fontSize:12, top:3,color:colors.DEFULAT_COLOR,position:'absolute'}]}>{highProp}세</Text>
+            </View>
             {highThumb}
           </Animated.View>
         }
